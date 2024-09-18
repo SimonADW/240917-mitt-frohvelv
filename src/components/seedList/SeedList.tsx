@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./SeedList.module.css";
 import editIcon from "../../assets/edit-svgrepo-com.svg";
 import deleteIcon from "../../assets/bag-svgrepo-com.svg";
@@ -14,6 +14,10 @@ type SeedListProps = {
 const SeedList = ({ currentStock, setCurrentStock, setFormOpen, setIsEditing }: SeedListProps) => {
 	const [listToDisplay, setListToDisplay] = useState(currentStock)
 	// const [state, dispatch] = useReducer(reducer, second)
+
+	useEffect(()=> {
+		setListToDisplay(currentStock);
+	}, [currentStock]);
 
 	const handleEditItem = () => {
 		setIsEditing(true);
@@ -40,7 +44,7 @@ const SeedList = ({ currentStock, setCurrentStock, setFormOpen, setIsEditing }: 
 				return (
 					<ul key={seed.id} className={style.seedList}>
 						<li>{seed.name}</li>
-						<li>{seed.producer}</li>
+						<li>{seed.manufacturer}</li>
 						<li>{seed.stock}</li>
 						<li className={style.seedList__buttonContainer}>
 							<button onClick={()=> handleEditItem()}>

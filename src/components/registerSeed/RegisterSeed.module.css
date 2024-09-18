@@ -27,12 +27,12 @@
 
 .registerSeed__form {	
 	width: clamp(20rem, 100%, 30rem);
-	height: 30rem;
+	height: fit-content;
 	margin: 0 auto;
 
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+
 	
 	border: 2px solid #4CAF50;
 	border-radius: 5px;
@@ -40,7 +40,7 @@
 	background: white;
 }
 
-.registerSeed__form div {
+.registerSeed__form > div {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -61,7 +61,15 @@
 	padding: 0.5rem;
 }
 
+div:has([name="comment"]) {
+	margin-bottom: 2rem;
+}
 
+.formError {
+	color: red;
+	font-size: 0.8rem;	
+	align-self: flex-end;
+}
 
 .registerSeed__form button {	
 	background-color: #4CAF50;
