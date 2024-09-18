@@ -1,0 +1,34 @@
+.seedList {
+	display: flex;
+	justify-content: space-between;	
+	list-style: none;		
+}
+
+.seedList li {
+	flex: 1;
+	align-self: center;
+	padding: 0.5rem;
+}
+
+.seedList:first-child {
+	font-weight: 600;
+}
+
+.seedList:nth-child(odd) {
+	background-color: #f2f2f2;
+}
+
+[type="number"] {
+	width: 3rem;
+	padding: 0.3rem;
+}
+
+.seedList__buttonContainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.seedList__buttonContainer button {
+	background: none;
+	border: none;
+}

@@ -1,0 +1,65 @@
+.registerSeed__wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+
+	position: absolute;
+	top: 2rem;
+	left: 0;
+	backdrop-filter: blur(5px);
+}
+
+.registerSeed__closeButton {
+	position: absolute;
+	top: 0;
+	right: 2rem;
+	font-size: 2rem;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.registerSeed__form {	
+	width: clamp(20rem, 100%, 30rem);
+	height: 30rem;
+	margin: 0 auto;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	
+	border: 2px solid #4CAF50;
+	border-radius: 5px;
+	padding: 2rem 0.5rem;
+	background: white;
+}
+
+.registerSeed__form div {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.8rem;
+}
+
+.registerSeed__form label {
+	font-weight: 600;
+	align-self: flex-start;
+}
+
+.registerSeed__form input,
+.registerSeed__form button,
+.registerSeed__form select {
+	width: 100%;
+	font-size: 1.5rem;
+	padding: 0.5rem;
+}
+
+.registerSeed__form button {	
+	background-color: #4CAF50;
+	border: none;
+}
