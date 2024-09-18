@@ -1,5 +1,5 @@
 body {
-  
+  font-family: inter, sans-serif;
 }
 
 #root {
@@ -10,7 +10,7 @@ body {
 
 main {
   flex: 1;
-  padding: 0.5rem;   
+  padding: 0 0.5rem;   
   display: flex;
   flex-direction: column;
   gap: 2rem;

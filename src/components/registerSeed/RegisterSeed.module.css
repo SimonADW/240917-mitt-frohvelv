@@ -8,14 +8,16 @@
 	padding: 1rem;
 
 	position: absolute;
-	top: 2rem;
+	top: 0;
 	left: 0;
 	backdrop-filter: blur(5px);
 }
 
 .registerSeed__closeButton {
+	width: 3rem;
+	height: 3rem;
 	position: absolute;
-	top: 0;
+	top: 2rem;
 	right: 2rem;
 	font-size: 2rem;
 	background: none;
@@ -58,6 +60,8 @@
 	font-size: 1.5rem;
 	padding: 0.5rem;
 }
+
+
 
 .registerSeed__form button {	
 	background-color: #4CAF50;

@@ -29,6 +29,7 @@
 }
 
 .seedList__buttonContainer button {
+	width: 1.5rem;
 	background: none;
 	border: none;
 }

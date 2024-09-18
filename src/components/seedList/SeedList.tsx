@@ -1,29 +1,33 @@
 import { useReducer, useState } from "react";
 import style from "./SeedList.module.css";
+import editIcon from "../../assets/edit-svgrepo-com.svg";
+import deleteIcon from "../../assets/bag-svgrepo-com.svg";
+import { CurrentStockType } from "../../App";
 
 type SeedListProps = {
-	currentStock: {
-		id: number;
-		name: string;
-		producer: string;
-		stock: number;
-	}[];
+	currentStock: CurrentStockType,
+	setCurrentStock: React.Dispatch<React.SetStateAction<CurrentStockType>>,
+	setFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
+	setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
 };
 
-const SeedList = ({ currentStock }: SeedListProps) => {
+const SeedList = ({ currentStock, setCurrentStock, setFormOpen, setIsEditing }: SeedListProps) => {
 	const [listToDisplay, setListToDisplay] = useState(currentStock)
 	// const [state, dispatch] = useReducer(reducer, second)
 
-	const handleStockChange = () => {
-		console.log("Stock change");
+	const handleEditItem = () => {
+		setIsEditing(true);
+		setFormOpen(true);
 	};
 
-	const handleDeleteItem = () => {
-		console.log("Delete item");
+	const handleDeleteItem = (clickedSeedID: number) => {
+		const clonedStock = [...currentStock];
+		const updatedStock = clonedStock.filter((seed) => seed.id !== clickedSeedID);
+		setCurrentStock([...updatedStock]);
+		setListToDisplay([...updatedStock]);
 	};
-
 	
-
+	
 	return (
 		<div>
 			<ul className={style.seedList}>
@@ -39,12 +43,12 @@ const SeedList = ({ currentStock }: SeedListProps) => {
 						<li>{seed.producer}</li>
 						<li>{seed.stock}</li>
 						<li className={style.seedList__buttonContainer}>
-							<select onChange={() => handleStockChange()} name="stock" id="">						
-								<option value="litt">Litt</option>
-								<option value="halv">Halv pakke</option>
-								<option value="hel">Hel pakke</option>
-							</select>							
-							<button onClick={()=> handleDeleteItem()}>🗑️</button>
+							<button onClick={()=> handleEditItem()}>
+								<img src={editIcon} alt="pencil icon" />
+							</button>						
+							<button onClick={()=> handleDeleteItem(seed.id)}>
+								<img src={deleteIcon} alt="trashcan icon" />
+							</button>
 						</li>
 					</ul>
 				);
