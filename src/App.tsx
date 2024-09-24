@@ -23,7 +23,7 @@ function App() {
     <>
       <Hero />
       <main>
-        <AddAndSearch setFormOpen={setFormOpen} />
+        <AddAndSearch setFormOpen={setFormOpen} setListToDisplay={setListToDisplay}/>
         <SeedList setListToDisplay={setListToDisplay} listToDisplay={listToDisplay} setFormOpen={setFormOpen} setSeedToEdit={setSeedToEdit}/>
         {formOpen && <RegisterSeed setFormOpen={setFormOpen} seedToEdit={seedToEdit} setSeedToEdit={setSeedToEdit} />}
       </main>
