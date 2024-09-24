@@ -1,9 +1,7 @@
-import React from 'react'
 import styles from './AddAndSearch.module.css'
-import { setFormType } from '../../App'
 
 
-const addAndSearch = ({setFormOpen}: setFormType) => {
+const addAndSearch = ({setFormOpen}) => {
   return (
 	<div className={styles.addAndSearchContainer}>
 		<button onClick={()=> setFormOpen(true)}>Nytt frø</button>

@@ -1,35 +1,31 @@
 import './App.css'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Hero from './components/hero/Hero'
 import AddAndSearch from './components/addAndSearch/AddAndSearch'
 import SeedList from './components/seedList/SeedList'
 import RegisterSeed from './components/registerSeed/RegisterSeed'
-import seedInventory from './assets/data/seedsData'
+import { SeedsContext } from './context/SeedsContext'
+import { itemType } from './hooks/useSeed'
 
-export type CurrentStockType = {  
-  id: number
-  name: string
-  manufacturer: string
-  stock: string
-}[]
 
 function App() {
-  const [currentStock, setCurrentStock] = useState<CurrentStockType>([...seedInventory])
+  const { currentStock } = useContext(SeedsContext)
   const [formOpen, setFormOpen] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
+  const [listToDisplay, setListToDisplay] = useState(currentStock)
+  const [seedToEdit, setSeedToEdit] = useState<itemType | null>(null)
 
-  const handleAddItem = (newItem: CurrentStockType[number]) => {
-    setCurrentStock((prevStock)=> [...prevStock, newItem]);    
-    setFormOpen(false);
-  }
+  // Trigger re-render of list
+  useEffect(()=> {
+		setListToDisplay(currentStock);	
+	}, [currentStock]);
 
   return (
     <>
       <Hero />
       <main>
         <AddAndSearch setFormOpen={setFormOpen} />
-        <SeedList currentStock={currentStock} setCurrentStock={setCurrentStock} setFormOpen={setFormOpen} setIsEditing={setIsEditing}/>
-        {formOpen && <RegisterSeed currentStock={currentStock} setFormOpen={setFormOpen} isEditing={isEditing} handleAddItem={handleAddItem}/>}
+        <SeedList setListToDisplay={setListToDisplay} listToDisplay={listToDisplay} setFormOpen={setFormOpen} setSeedToEdit={setSeedToEdit}/>
+        {formOpen && <RegisterSeed setFormOpen={setFormOpen} seedToEdit={seedToEdit} setSeedToEdit={setSeedToEdit} />}
       </main>
       <footer>2024 &copy; Simon Winter</footer>
     </>

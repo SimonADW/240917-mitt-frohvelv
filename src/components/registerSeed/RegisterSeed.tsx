@@ -1,14 +1,15 @@
-import { CurrentStockType } from "../../App";
 import style from "./RegisterSeed.module.css";
 import closeIcon from "../../assets/close-square-svgrepo-com.svg";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useContext } from "react";
+import { SeedsContext } from "../../context/SeedsContext";
+import { itemType } from "../../hooks/useSeed";
 
 type RegisterSeedProps = {
-	currentStock: CurrentStockType,
 	setFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
-	isEditing: boolean;
-	handleAddItem: (newItem: CurrentStockType[number]) => void;
-};
+	seedToEdit: itemType | null;
+	setSeedToEdit: React.Dispatch<React.SetStateAction<itemType | null>>;
+}
 
 type Inputs = {
 	id: number;
@@ -18,27 +19,38 @@ type Inputs = {
 	comment: string;
 };
 
-const RegisterSeed = ({ setFormOpen, isEditing, handleAddItem }: RegisterSeedProps) => {
+const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedProps) => {
+	const { currentStock, addSeed, editSeed } = useContext(SeedsContext)
 	const {register, handleSubmit, formState: { errors }} = useForm<Inputs>({
-		// TODO: Set default values for the form
 		defaultValues: {
-			name: isEditing ? 'seed.name' : '',
-			manufacturer: isEditing ? 'seed.producer' : '',
-			stock: isEditing ? 'seed.stock' : 'hel',
-			comment: isEditing ? 'seed.comment' : ''
+			id: seedToEdit ? seedToEdit.id : currentStock.length + 1,  
+			name: seedToEdit ? seedToEdit.name : '',
+			manufacturer: seedToEdit ? seedToEdit.manufacturer : '',
+			stock: seedToEdit ? seedToEdit.stock : 'Hel',
+			comment: seedToEdit ? seedToEdit.comment : ''
 		}
 	});
 
+	const handleClose = () => {
+		setFormOpen(false)
+		setSeedToEdit(null)
+	}
+
 	const onSubmit: SubmitHandler<Inputs> = (data) => {
-		console.log(data);
-		handleAddItem(data);
+		if(seedToEdit) {
+			editSeed(data);
+		} else {
+			addSeed(data);
+		}
+		setFormOpen(false)
+		setSeedToEdit(null)
 	};
 
 
 	return (
 		<section className={style.registerSeed__wrapper}>
 				<button
-					onClick={() => setFormOpen(false)}
+					onClick={handleClose}
 					className={style.registerSeed__closeButton}
 				>
 					<img src={closeIcon} alt="close icon"/>
@@ -66,7 +78,7 @@ const RegisterSeed = ({ setFormOpen, isEditing, handleAddItem }: RegisterSeedPro
 					<label htmlFor="comment">Kommentar:</label>
 					<input type="text" id="comment" {...register("comment")} />
 				</div>
-				<button type="submit">{isEditing ? 'Oppdater' : 'Legg til'}</button>
+				<button type="submit">{seedToEdit ? 'Oppdater' : 'Legg til'}</button>
 			</form>
 		</section>
 	);

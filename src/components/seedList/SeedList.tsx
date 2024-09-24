@@ -1,37 +1,26 @@
-import { useEffect, useState } from "react";
 import style from "./SeedList.module.css";
 import editIcon from "../../assets/edit-svgrepo-com.svg";
 import deleteIcon from "../../assets/bag-svgrepo-com.svg";
-import { CurrentStockType } from "../../App";
+import { CurrentStockType } from "../../hooks/useSeed.tsx";
+import { useContext } from "react";
+import { SeedsContext } from "../../context/SeedsContext.tsx";
+import { itemType } from "../../hooks/useSeed.tsx";
 
 type SeedListProps = {
-	currentStock: CurrentStockType,
-	setCurrentStock: React.Dispatch<React.SetStateAction<CurrentStockType>>,
+	setListToDisplay: React.Dispatch<React.SetStateAction<CurrentStockType>>, 
+	listToDisplay: CurrentStockType,
 	setFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
-	setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+	setSeedToEdit: React.Dispatch<React.SetStateAction<itemType | null>>
 };
 
-const SeedList = ({ currentStock, setCurrentStock, setFormOpen, setIsEditing }: SeedListProps) => {
-	const [listToDisplay, setListToDisplay] = useState(currentStock)
-	// const [state, dispatch] = useReducer(reducer, second)
-
-	useEffect(()=> {
-		setListToDisplay(currentStock);
-	}, [currentStock]);
-
-	const handleEditItem = () => {
-		setIsEditing(true);
+const SeedList = ({ listToDisplay, setFormOpen, setSeedToEdit }: SeedListProps) => {
+	const { deleteSeed } = useContext(SeedsContext)
+	
+	const openEditItem = (item: itemType) => {
+		setSeedToEdit(item);
 		setFormOpen(true);
-	};
+	};										
 
-	const handleDeleteItem = (clickedSeedID: number) => {
-		const clonedStock = [...currentStock];
-		const updatedStock = clonedStock.filter((seed) => seed.id !== clickedSeedID);
-		setCurrentStock([...updatedStock]);
-		setListToDisplay([...updatedStock]);
-	};
-	
-	
 	return (
 		<div>
 			<ul className={style.seedList}>
@@ -47,10 +36,10 @@ const SeedList = ({ currentStock, setCurrentStock, setFormOpen, setIsEditing }: 
 						<li>{seed.manufacturer}</li>
 						<li>{seed.stock}</li>
 						<li className={style.seedList__buttonContainer}>
-							<button onClick={()=> handleEditItem()}>
+							<button onClick={()=> openEditItem(seed)}>
 								<img src={editIcon} alt="pencil icon" />
 							</button>						
-							<button onClick={()=> handleDeleteItem(seed.id)}>
+							<button onClick={()=> deleteSeed(seed)}>
 								<img src={deleteIcon} alt="trashcan icon" />
 							</button>
 						</li>
