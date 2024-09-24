@@ -22,31 +22,31 @@ const SeedList = ({ listToDisplay, setFormOpen, setSeedToEdit }: SeedListProps) 
 	};										
 
 	return (
-		<div>
-			<ul className={style.seedList}>
-				<li>Vekst</li>
-				<li>Produsent</li>
-				<li>Beholding</li>
-				<li></li>
-			</ul>
+		<ul>
+			<li className={style.seedListLi}>
+				<div>Vekst</div>
+				<div>Produsent</div>
+				<div>Beholding</div>
+				<div></div>
+			</li>
 			{listToDisplay.map((seed) => {
 				return (
-					<ul key={seed.id} className={style.seedList}>
-						<li>{seed.name}</li>
-						<li>{seed.manufacturer}</li>
-						<li>{seed.stock}</li>
-						<li className={style.seedList__buttonContainer}>
+					<li key={seed.id} className={style.seedListLi}>
+						<div>{seed.name}</div>
+						<div>{seed.manufacturer}</div>
+						<div>{seed.stock}</div>
+						<div className={style.seedList__buttonContainer}>
 							<button onClick={()=> openEditItem(seed)}>
 								<img src={editIcon} alt="pencil icon" />
 							</button>						
 							<button onClick={()=> deleteSeed(seed)}>
 								<img src={deleteIcon} alt="trashcan icon" />
 							</button>
-						</li>
-					</ul>
+						</div>
+					</li>
 				);
 			})}
-		</div>
+		</ul>
 	);
 };
 

@@ -22,8 +22,9 @@ type Inputs = {
 const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedProps) => {
 	const { currentStock, addSeed, editSeed } = useContext(SeedsContext)
 	const {register, handleSubmit, formState: { errors }} = useForm<Inputs>({
+		// @TODO: fix id issues
 		defaultValues: {
-			id: seedToEdit ? seedToEdit.id : currentStock.length + 1,  
+			id: seedToEdit ? seedToEdit.id : currentStock.length,
 			name: seedToEdit ? seedToEdit.name : '',
 			manufacturer: seedToEdit ? seedToEdit.manufacturer : '',
 			stock: seedToEdit ? seedToEdit.stock : 'Hel',

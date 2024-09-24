@@ -1,21 +1,25 @@
-.seedList {
+
+.seedListLi {
+	border-bottom-right-radius: 15px;
 	display: flex;
 	justify-content: space-between;	
 	list-style: none;		
 }
 
-.seedList li {
+
+.seedListLi div {
+	height: 5rem;
 	flex: 1;
 	align-self: center;
 	padding: 0.5rem;
 }
 
-.seedList:first-child {
+.seedListLi:first-child {
 	font-weight: 600;
 }
 
-.seedList:nth-child(odd) {
-	background-color: #f2f2f2;
+.seedListLi:nth-child(odd) {
+	background-color: rgb(218,213,200);
 }
 
 [type="number"] {
@@ -25,7 +29,7 @@
 
 .seedList__buttonContainer {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
 }
 
 .seedList__buttonContainer button {

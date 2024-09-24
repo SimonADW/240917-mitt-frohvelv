@@ -14,9 +14,11 @@ function App() {
   const [listToDisplay, setListToDisplay] = useState(currentStock)
   const [seedToEdit, setSeedToEdit] = useState<itemType | null>(null)
 
+
   // Trigger re-render of list
   useEffect(()=> {
 		setListToDisplay(currentStock);	
+    window.localStorage.setItem('currentStock', JSON.stringify(currentStock))  
 	}, [currentStock]);
 
   return (

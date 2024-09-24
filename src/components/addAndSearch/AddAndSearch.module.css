@@ -16,3 +16,10 @@
 	border: none;
 	cursor: pointer;
 }
+
+@media screen and (min-width: 500px) {
+	.addAndSearchContainer {
+		justify-content: end;
+		gap: 1rem;
+	}	
+}
