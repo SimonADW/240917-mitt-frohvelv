@@ -2,9 +2,12 @@ import style from "./SeedList.module.css";
 import editIcon from "../../assets/edit-svgrepo-com.svg";
 import deleteIcon from "../../assets/bag-svgrepo-com.svg";
 import { CurrentStockType } from "../../hooks/useSeed.tsx";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SeedsContext } from "../../context/SeedsContext.tsx";
 import { itemType } from "../../hooks/useSeed.tsx";
+import { FaAngleDown } from "react-icons/fa6";
+
+
 
 type SeedListProps = {
 	setListToDisplay: React.Dispatch<React.SetStateAction<CurrentStockType>>, 
@@ -15,6 +18,7 @@ type SeedListProps = {
 
 const SeedList = ({ listToDisplay, setFormOpen, setSeedToEdit }: SeedListProps) => {
 	const { deleteSeed } = useContext(SeedsContext)
+	const [ openAccordionId, setOpenAccordionId ] = useState<number | null>(null);
 	
 	const openEditItem = (item: itemType) => {
 		setSeedToEdit(item);
@@ -23,26 +27,50 @@ const SeedList = ({ listToDisplay, setFormOpen, setSeedToEdit }: SeedListProps) 
 
 	return (
 		<ul>
-			<li className={style.seedListLi}>
+			<li className={style.seedListLi__headings}>
 				<div>Vekst</div>
-				<div>Produsent</div>
 				<div>Beholding</div>
 				<div></div>
 			</li>
 			{listToDisplay.map((seed) => {
 				return (
 					<li key={seed.id} className={style.seedListLi}>
-						<div>{seed.name}</div>
-						<div>{seed.manufacturer}</div>
-						<div>{seed.stock}</div>
-						<div className={style.seedList__buttonContainer}>
-							<button onClick={()=> openEditItem(seed)}>
-								<img src={editIcon} alt="pencil icon" />
-							</button>						
-							<button onClick={()=> deleteSeed(seed)}>
-								<img src={deleteIcon} alt="trashcan icon" />
+						<div className={style.seedListLi__accordionClosedContent}>
+							<button className={`${style.accordionButton} ${openAccordionId === seed.id && style.active}`}>
+								<FaAngleDown
+									onClick={() =>
+										openAccordionId === seed.id
+											? setOpenAccordionId(null)
+											: setOpenAccordionId(seed.id)
+									}
+								/>
 							</button>
+							<div>{seed.name}</div>
+							<div>{seed.stock}</div>
+							<div className={style.seedList__buttonContainer}>
+								<button onClick={()=> openEditItem(seed)}>
+									<img src={editIcon} alt="pencil icon" />
+								</button>
+								<button onClick={()=> deleteSeed(seed)}>
+									<img src={deleteIcon} alt="trashcan icon" />
+								</button>
+							</div>
 						</div>
+						{openAccordionId === seed.id && (
+							<div className={style.seedListLi__accordionOpenContent}>
+								{seed.comment && (
+									<div>
+										<span>Kommentar:</span>
+										<span>{seed.comment}</span>
+									</div>
+								)}
+
+								<div>
+									<span>Produsent: </span>
+									<span>{seed.manufacturer}</span>
+								</div>
+							</div>
+						)}
 					</li>
 				);
 			})}
