@@ -20,11 +20,10 @@ type Inputs = {
 };
 
 const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedProps) => {
-	const { currentStock, addSeed, editSeed } = useContext(SeedsContext)
+	const { addSeed, editSeed } = useContext(SeedsContext)
 	const {register, handleSubmit, formState: { errors }} = useForm<Inputs>({
-		// @TODO: fix id issues
 		defaultValues: {
-			id: seedToEdit ? seedToEdit.id : currentStock.length,
+			id: seedToEdit ? seedToEdit.id : Date.now(),
 			name: seedToEdit ? seedToEdit.name : '',
 			manufacturer: seedToEdit ? seedToEdit.manufacturer : '',
 			stock: seedToEdit ? seedToEdit.stock : 'Hel',
@@ -59,7 +58,7 @@ const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedPr
 			<form onSubmit={handleSubmit(onSubmit)} className={style.registerSeed__form} action="">
 				<div>
 					<label htmlFor="name">Navn:</label>
-					<input type="text" id="name" {...register("name", {required: "Navn er påkrevd", maxLength: 20})} />
+					<input type="text" id="name" autoFocus {...register("name", {required: "Navn er påkrevd", maxLength: 20})} />
 					<div className={style.formError}>{errors.name?.message}</div>
 				</div>
 				<div>

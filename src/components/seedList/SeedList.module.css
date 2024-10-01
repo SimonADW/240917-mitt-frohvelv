@@ -1,7 +1,7 @@
 
 .seedListLi {
 	min-height: 5rem;
-	padding-bottom: 2rem;
+	padding-bottom: 1.5rem;
 	border-bottom-right-radius: 15px;
 	list-style: none;	
 }
@@ -17,7 +17,7 @@
 .seedListLi div {	
 	flex: 1;
 	align-self: center;
-	padding: 0.5rem 0.5rem 0 0.5rem;
+	padding: 0.5rem;
 }
 
 .seedListLi:nth-child(odd) {
@@ -53,12 +53,18 @@
 
 .accordionButton {
 	width: 2rem;
+
 	font-size: 1.2rem;	
 	border: none;
 	background: none;	
 }
 
-.active {  
+.accordionButton svg {
+	
+
+}
+
+.active svg {  
 	transform: rotate(180deg);		/* Flip chevron */
 }
 
@@ -73,4 +79,26 @@
 	width: 1.5rem;
 	background: none;
 	border: none;
+}
+
+/* NO ITEM IN STOCK- PAGE */
+
+.noItemsContainer {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+
+.noItems {
+	letter-spacing: 3px;
+	font-size: 1.5rem;	
+	font-weight: 300;
+}
+
+.noItemsLogo {
+	width: 3rem;
+	border-radius: 10%;
+	opacity: 0.8;
 }
