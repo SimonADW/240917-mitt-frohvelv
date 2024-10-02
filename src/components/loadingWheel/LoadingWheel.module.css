@@ -7,7 +7,7 @@
 	flex-direction: column;
 	gap: 1rem;
 
-	padding-top: 15rem;
+	padding-top: 10rem;
 	backdrop-filter: blur(5px);
 	color: #4CAF50;
 	font-weight: 400;	
@@ -18,7 +18,7 @@
 	background: linear-gradient(to right, #4CAF50, #c6e1cf, #4CAF50); /* Gradient colors */
 	background-clip: text; 
 	background-size: 200%;
-	animation: gradientShine 3s ease infinite;
+	animation: gradientShine 3s ease-in-out infinite;
 }
 
 .wheel {

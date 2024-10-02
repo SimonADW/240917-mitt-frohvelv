@@ -45,7 +45,7 @@
 }
 
 .seedListLi__accordionOpenContent > div > span {
-	min-width: 6rem;
+	min-width: 8rem;
 }
 
 .seedListLi__accordionOpenContent span:first-child {
@@ -67,7 +67,8 @@
 .chevron {
 	position: relative;
 	top: 0.15rem;
-	opacity: 0.6;
+	opacity: 0.8;
+	color: #4CAF50;
 }
 
 /* BUTTONS */

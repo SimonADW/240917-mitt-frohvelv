@@ -76,6 +76,7 @@ const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedPr
 						<option value="Rest">Rest</option>
 						<option value="Halv">Halv pakke</option>
 						<option value="Hel">Hel pakke</option>
+						<option value="Flere">Flere pakker</option>
 					</select>
 				</div>
 				<div>
