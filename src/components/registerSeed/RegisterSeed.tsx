@@ -12,7 +12,7 @@ type RegisterSeedProps = {
 }
 
 type Inputs = {
-	id: number;
+	firestoreID: number;
 	name: string;
 	manufacturer: string;
 	stock: string;
@@ -23,7 +23,6 @@ const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedPr
 	const { addSeed, editSeed } = useContext(SeedsContext)
 	const {register, handleSubmit, formState: { errors }} = useForm<Inputs>({
 		defaultValues: {
-			id: seedToEdit ? seedToEdit.id : Date.now(),
 			name: seedToEdit ? seedToEdit.name : '',
 			manufacturer: seedToEdit ? seedToEdit.manufacturer : '',
 			stock: seedToEdit ? seedToEdit.stock : 'Hel',
@@ -36,15 +35,20 @@ const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedPr
 		setSeedToEdit(null)
 	}
 
-	const onSubmit: SubmitHandler<Inputs> = (data) => {
-		if(seedToEdit) {
-			editSeed(data);
+	const onSubmit = async (data: Inputs) => {
+		if (seedToEdit) {
+		  // If editing an existing seed
+		  await editSeed({
+			...data,
+			firestoreID: seedToEdit.firestoreID // Use existing Firestore document ID
+		  });
 		} else {
-			addSeed(data);
+		  // If adding a new seed
+		  await addSeed(data); // Firestore will generate the ID here
 		}
-		setFormOpen(false)
-		setSeedToEdit(null)
-	};
+		setFormOpen(false);
+		setSeedToEdit(null); // Reset after adding or editing
+	  };
 
 
 	return (

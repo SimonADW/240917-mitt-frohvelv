@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import seedInventory from "../assets/data/seedsData";
-import { addSeedToDatabase, deleteSeedFromDatabase, editSeedInDatabase, getStockFromDatabase } from "../firebase/firebaseFunction";
+import { firebaseConfig } from "../../firebaseConfig";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
 export type itemType = {
-	id: number;
+	firestoreID: number;
 	name: string;
 	manufacturer: string;
 	stock: string;
 	comment: string;
-	firestoreID?: string;
 	serverTimestamp?: string;
 };
 
@@ -21,65 +21,91 @@ export type SeedsContextType = {
 	deleteSeed: (seedToDelete: itemType) => void;
 };
 
+// INITIALIZE FIREBASE
+const app = initializeApp(firebaseConfig);
+const dataBase = getFirestore(app);
+const stockCollection = collection(dataBase, "seedsInventory");
+
+// HOOK TO HANDLE SEEDS
 export const useSeed = () => {
 	const [currentStock, setCurrentStock] = useState<CurrentStockType>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 
+	// LISTEN FOR CHANGES IN THE DATABASE AND UPDATE THE STATE
 	useEffect(()=> {
-		const fetchStock = async () => {
-			try {
-				setLoading(true);
-				const stockList = await getStockFromDatabase();
-				setCurrentStock(stockList);	
-			} catch (error) {
-				setError(error.message);	
-				console.log("Error fetching data;", error.message);
-			} finally {
-				setLoading(false);
-			}
-		}
+		setLoading(true);
+		const unsubscribe = onSnapshot(stockCollection, (snapshot) => {
+			const stockList = snapshot.docs.map((doc) => {
+				return {
+					firestoreID: doc.id,
+					serverTimestamp: serverTimestamp(),
+					...doc.data()
+				} as itemType;
+			})
 
-		fetchStock();
-	},[])
+			setCurrentStock(stockList);
+			setLoading(false);								
+		}, (error) => {
+			setError(error.message);
+			setLoading(false);
+			console.log("Error fetching data;", error.message);
+		})
 	
-	
+		return ()=> unsubscribe()
+	},[]);	
+
+	// ADD SEED TO DATABASE
 	const addSeed = async (newItem: itemType) => {
 		try {
-			setLoading(true);
-			await addSeedToDatabase(newItem);
-			setCurrentStock((prev) => [...prev, newItem]);
-		} catch (error) {
-			setError(error.message);
-			console.log("Error adding seed", error.message);
-		}	finally {
-			setLoading(false);
-		}
-	};
+				setLoading(true);
+				const newSeedRef = await addDoc(stockCollection, newItem);
+				console.log("New seed added with ID: ", newSeedRef.id);
+				setLoading(false);
+			} catch (error) {
+				if(error instanceof Error) {
+					setError(error.message);
+					console.log("Error adding seed", error.message);
+				}
+			}	finally {
+				setLoading(false);
+			}
+		};
 
+	// EDIT SEED IN DATABASE
 	const editSeed = async (editedSeed: itemType) => {
+		const { firestoreID, ...seedData } = editedSeed; 
+		// IF THE FIRESTOREID IS MISSING, THROW AN ERROR
+		if (!firestoreID) {
+			throw new Error("No Firestore ID provided for the seed to edit.");
+		}
+
 		try {
 			setLoading(true);
-			await editSeedInDatabase(editedSeed);			
-			setCurrentStock((prev) =>
-				prev.map((seed) => (seed.id === editedSeed.id ? editedSeed : seed))
-			);
-		} catch {
-			setError("Error editing seed");
+			const editedSeedRef = doc(dataBase, "seedsInventory", `${firestoreID}`);
+			// REMOVE FIRESTOREID FROM THE OBJECT BEFORE UPDATING THE DATABASE
+			await setDoc(editedSeedRef, seedData);
+			console.log("Edited seed with ID: ", firestoreID);	
+		} catch (error) {
+			if(error instanceof Error)	{
+				setError(error.message);
+			}
 		} finally {
 			setLoading(false);
 		};
 	};
 
+	// DELETE SEED FROM DATABASE
 	const deleteSeed = async (seedToDelete: itemType) => {
 		try {
 			setLoading(true);			
-			await deleteSeedFromDatabase(seedToDelete);
-			setCurrentStock((prev) =>
-				prev.filter((seed) => seed.id !== seedToDelete.id)
-			);
-		} catch {
-			setError("Error deleting seed");
+			const seedToDeleteRef = doc(dataBase, "seedsInventory", `${seedToDelete.firestoreID}`);
+			await deleteDoc(seedToDeleteRef);
+			console.log("Seed deleted with ID: ", seedToDeleteRef.id);
+		} catch (error) {
+			if(error instanceof Error)	{
+				setError(error.message);
+			}
 		} finally {
 			setLoading(false);
 		}	

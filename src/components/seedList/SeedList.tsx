@@ -38,16 +38,16 @@ const SeedList = ({
 
 			{listToDisplay.map((seed) => {
 				return (
-					<li key={seed.id} className={style.seedListLi}>
+					<li key={seed.firestoreID} className={style.seedListLi}>
 						<div className={style.seedListLi__accordionClosedContent}>
 							<button
 								onClick={() =>
-									openAccordionId === seed.id
+									openAccordionId === seed.firestoreID
 										? setOpenAccordionId(null)
-										: setOpenAccordionId(seed.id)
+										: setOpenAccordionId(seed.firestoreID)
 								}
 								className={`${style.accordionButton} ${
-									openAccordionId === seed.id && style.active
+									openAccordionId === seed.firestoreID && style.active
 								}`}
 							>
 								<FaAngleDown className={style.chevron} />
@@ -64,7 +64,7 @@ const SeedList = ({
 								</button>
 							</div>
 						</div>
-						{openAccordionId === seed.id && (
+						{openAccordionId === seed.firestoreID && (
 							<div
 								className={
 									style.seedListLi__accordionOpenContent

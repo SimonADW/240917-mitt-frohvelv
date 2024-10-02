@@ -16,6 +16,7 @@ function App() {
 
 	// Trigger re-render of list
 	useEffect(() => {
+    
 		setListToDisplay(currentStock);
 	}, [currentStock]);
 

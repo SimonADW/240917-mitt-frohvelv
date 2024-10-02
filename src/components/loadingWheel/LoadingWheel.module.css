@@ -5,19 +5,28 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	padding-top: 15rem;
+	gap: 1rem;
 
+	padding-top: 15rem;
 	backdrop-filter: blur(5px);
 	color: #4CAF50;
-	font-weight: 300;
+	font-weight: 400;	
+}
+
+.wheelBackdrop p {
+	color: transparent; 
+	background: linear-gradient(to right, #4CAF50, #c6e1cf, #4CAF50); /* Gradient colors */
+	background-clip: text; 
+	background-size: 200%;
+	animation: gradientShine 3s ease infinite;
 }
 
 .wheel {
-	width: 60px;
-	height: 60px;
+	width: 70px;
+	height: 70px;
 	border: 10px solid #f3f3f3;
-	border-top: 10px dotted #4CAF50;
-	border-right: 10px dotted #4CAF50;
+	border-top: 8px dotted #4CAF50;
+	border-right: 8px dotted #4CAF50;
 	border-radius: 50%;
 	animation: spin 3s ease infinite;
 }
@@ -30,3 +39,12 @@
 		transform: rotate(360deg);
 	}
 }
+
+@keyframes gradientShine {
+	0% {
+	  background-position: 200%; /* Start the gradient off-screen */
+	}
+	100% {
+	  background-position: -200%; /* Slide it fully across the text */
+	}
+  }
