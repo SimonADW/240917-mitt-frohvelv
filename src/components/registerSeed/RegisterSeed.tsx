@@ -1,6 +1,6 @@
 import style from "./RegisterSeed.module.css";
 import closeIcon from "../../assets/close-square-svgrepo-com.svg";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { SeedsContext } from "../../context/SeedsContext";
 import { itemType } from "../../hooks/useSeed";
@@ -12,7 +12,7 @@ type RegisterSeedProps = {
 }
 
 type Inputs = {
-	firestoreID: number;
+	firestoreID: string;
 	name: string;
 	manufacturer: string;
 	stock: string;
@@ -38,13 +38,13 @@ const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedPr
 	const onSubmit = async (data: Inputs) => {
 		if (seedToEdit) {
 		  // If editing an existing seed
-		  await editSeed({
+		  editSeed({
 			...data,
 			firestoreID: seedToEdit.firestoreID // Use existing Firestore document ID
 		  });
 		} else {
 		  // If adding a new seed
-		  await addSeed(data); // Firestore will generate the ID here
+		  addSeed(data); // Firestore will generate the ID here
 		}
 		setFormOpen(false);
 		setSeedToEdit(null); // Reset after adding or editing

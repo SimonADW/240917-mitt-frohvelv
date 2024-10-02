@@ -21,7 +21,7 @@ const SeedList = ({
 	setSeedToEdit,
 }: SeedListProps) => {
 	const { deleteSeed } = useContext(SeedsContext);
-	const [openAccordionId, setOpenAccordionId] = useState<number | null>(null);
+	const [openAccordionId, setOpenAccordionId] = useState<string | null>(null);
 
 	const openEditItem = (item: itemType) => {
 		setSeedToEdit(item);

@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "../../firebaseConfig";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, setDoc } from "firebase/firestore";
 
 export type itemType = {
-	firestoreID: number;
+	firestoreID: string;
 	name: string;
 	manufacturer: string;
 	stock: string;
 	comment: string;
-	serverTimestamp?: string;
 };
 
 export type CurrentStockType = itemType[];
@@ -39,7 +38,6 @@ export const useSeed = () => {
 			const stockList = snapshot.docs.map((doc) => {
 				return {
 					firestoreID: doc.id,
-					serverTimestamp: serverTimestamp(),
 					...doc.data()
 				} as itemType;
 			})
@@ -49,7 +47,6 @@ export const useSeed = () => {
 		}, (error) => {
 			setError(error.message);
 			setLoading(false);
-			console.log("Error fetching data;", error.message);
 		})
 	
 		return ()=> unsubscribe()

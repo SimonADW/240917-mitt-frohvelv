@@ -7,7 +7,7 @@
 }
 
 .seedListLi__headings {
-	/* font-size: 1.2rem; */
+	font-size: 1.2rem;
 	margin-left: 2.5rem;
 	display: flex;
 	justify-content: space-between;

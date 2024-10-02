@@ -9,7 +9,15 @@ export type SeedsContextType = {
 	deleteSeed: (seedToDelete: itemType) => void;
 	loading: boolean;
 }
-export const SeedsContext = createContext<SeedsContextType>();
+export const SeedsContext = createContext<SeedsContextType>({
+	currentStock: [], // Placeholder values 
+	addSeed: () => {}, 
+	editSeed: () => {}, 
+	deleteSeed: () => {}, 
+	loading: false,  
+}
+	
+);
 
 type SeedsProviderProps = {
 	children: ReactNode
