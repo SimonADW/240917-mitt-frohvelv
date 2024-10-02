@@ -1,49 +1,48 @@
-
 .seedListLi {
 	min-height: 5rem;
 	padding-bottom: 1.5rem;
 	border-bottom-right-radius: 15px;
-	list-style: none;	
+	list-style: none;
 }
 
 .seedListLi__headings {
 	margin-left: 2.5rem;
 	display: flex;
-	justify-content: space-between;	
+	justify-content: space-between;
 	font-weight: 600;
 }
 
-.seedListLi__headings div, 
-.seedListLi div {	
+.seedListLi__headings div,
+.seedListLi div {
 	flex: 1;
 	align-self: center;
 	padding: 0.5rem;
 }
 
 .seedListLi:nth-child(odd) {
-	background-color: rgb(218,213,200);
+	background-color: rgb(218, 213, 200);
 }
 
 /* ACCORDION */
 .seedListLi__accordionClosedContent {
 	display: flex;
-	justify-content: space-between;	
+	justify-content: space-between;
 }
 
 .seedListLi__accordionOpenContent {
-	margin: 0 2rem;	
-	display: flex;	
+	margin: 0 2rem;
+	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
 
-.seedListLi__accordionOpenContent>div {
+.seedListLi__accordionOpenContent > div {
 	width: 100%;
 	display: flex;
 	gap: 1rem;
 }
 
-.seedListLi__accordionOpenContent>div>span {	
+.seedListLi__accordionOpenContent > div > span {
 	min-width: 6rem;
 }
 
@@ -54,18 +53,19 @@
 .accordionButton {
 	width: 2rem;
 
-	font-size: 1.2rem;	
+	font-size: 1.2rem;
 	border: none;
-	background: none;	
+	background: none;
 }
 
-.accordionButton svg {
-	
-
+.active svg {
+	transform: rotate(180deg); /* Flip chevron */
 }
 
-.active svg {  
-	transform: rotate(180deg);		/* Flip chevron */
+.chevron {
+	position: relative;
+	top: 0.15rem;
+	opacity: 0.6;
 }
 
 /* BUTTONS */
@@ -90,10 +90,9 @@
 	align-items: center;
 }
 
-
 .noItems {
 	letter-spacing: 3px;
-	font-size: 1.5rem;	
+	font-size: 1.5rem;
 	font-weight: 300;
 }
 

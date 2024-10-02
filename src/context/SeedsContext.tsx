@@ -7,6 +7,7 @@ export type SeedsContextType = {
 	addSeed: (newItem: itemType) => void;
 	editSeed: (editedSeed: itemType) => void;
 	deleteSeed: (seedToDelete: itemType) => void;
+	loading: boolean;
 }
 export const SeedsContext = createContext<SeedsContextType>();
 
@@ -17,10 +18,10 @@ type SeedsProviderProps = {
 export type CurrentStockType = itemType[];
 
 const SeedsProvider = ({ children }: SeedsProviderProps) => {
-	const { currentStock, addSeed, editSeed, deleteSeed } = useSeed();
+	const { currentStock, addSeed, editSeed, deleteSeed, loading } = useSeed();
 
   return (
-	<SeedsContext.Provider value={{currentStock, addSeed, editSeed, deleteSeed }}>
+	<SeedsContext.Provider value={{currentStock, addSeed, editSeed, deleteSeed, loading }}>
 		{children}
 	</SeedsContext.Provider>
   )

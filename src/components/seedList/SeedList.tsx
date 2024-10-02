@@ -50,7 +50,7 @@ const SeedList = ({
 									openAccordionId === seed.id && style.active
 								}`}
 							>
-								<FaAngleDown />
+								<FaAngleDown className={style.chevron} />
 							</button>
 
 							<div>{seed.name}</div>
@@ -89,15 +89,13 @@ const SeedList = ({
 		</ul>
 	) : (
 		<div className={style.noItemsContainer}>
+			{/* CURVE TEXT WITH SVG */}
 			<svg width="400" height="200">
-				{/* <!-- Define the curved path --> */}
 				<path
 					id="curve"
 					d="M 50 150 Q 200 50 350 150"
 					fill="transparent"
 				/>
-
-				{/* <!-- Use the path to create curved text --> */}
 				<text>
 					<textPath className={style.noItems} href="#curve">
 						Nothing to see(d) here
