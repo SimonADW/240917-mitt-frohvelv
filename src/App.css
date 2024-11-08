@@ -9,6 +9,9 @@ body {
 }
 
 main {
+  
+  width: clamp(200px, 100%, 1200px);
+  margin: 0 auto;
   flex: 1;
   padding: 0 0.5rem;   
   display: flex;

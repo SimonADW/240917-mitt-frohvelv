@@ -21,13 +21,14 @@ type Inputs = {
 
 const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedProps) => {
 	const { addSeed, editSeed } = useContext(SeedsContext)
-	const {register, handleSubmit, formState: { errors }} = useForm<Inputs>({
+	const {register, handleSubmit, formState: { errors }} = useForm<Inputs>({		
 		defaultValues: {
 			name: seedToEdit ? seedToEdit.name : '',
 			manufacturer: seedToEdit ? seedToEdit.manufacturer : '',
 			stock: seedToEdit ? seedToEdit.stock : 'Hel',
 			comment: seedToEdit ? seedToEdit.comment : ''
-		}
+		},
+		
 	});
 
 	const handleClose = () => {
@@ -62,12 +63,12 @@ const RegisterSeed = ({ setFormOpen, seedToEdit, setSeedToEdit }: RegisterSeedPr
 			<form onSubmit={handleSubmit(onSubmit)} className={style.registerSeed__form} action="">
 				<div>
 					<label htmlFor="name">Navn:</label>
-					<input type="text" id="name" autoFocus {...register("name", {required: "Navn er påkrevd", maxLength: 20})} />
+					<input type="text" id="name" autoFocus {...register("name", {required: "Navn er påkrevd", maxLength: {value: 20, message: "Navn kan være maks 20 tegn"}})} />
 					<div className={style.formError}>{errors.name?.message}</div>
 				</div>
 				<div>
 					<label htmlFor="manufacturer">Produsent:</label>
-					<input type="text" id="manufacturer" {...register("manufacturer", {required: "Produsent er påkrevd", maxLength: 20})} />
+					<input type="text" id="manufacturer" {...register("manufacturer", {required: "Produsent er påkrevd", maxLength: {value: 20, message: "Produsent kan være maks 20 tegn"}})} />
 					<div className={style.formError}>{errors.manufacturer?.message}</div>
 				</div>
 				<div>

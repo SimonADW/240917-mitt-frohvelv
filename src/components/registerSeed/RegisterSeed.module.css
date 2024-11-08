@@ -27,7 +27,7 @@
 
 .registerSeed__form {	
 	width: clamp(20rem, 100%, 30rem);
-	height: fit-content;
+	height: calc(fit-content + 5px);
 	margin: 0 auto;
 
 	display: flex;
